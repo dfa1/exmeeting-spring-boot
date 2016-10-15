@@ -1,0 +1,210 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>Spring Boot</h1>
+					<p>why it matterns for ExMachina</p>
+				</section>
+				<section>
+					<section>
+						<h2>What it is?</h2>
+						<a href="https://spring.io/blog/2013/08/06/spring-boot-simplifying-spring-for-everyone">announced in 2013</a>
+					</section>
+					<section>
+						<h3>library + build tools + documentation</h3>
+						<p>an opinionated framework on top of Spring</p>
+						<p>* no XML config, @Component, @Autowired</p>
+					</section>
+					<section>
+						<h2>No code generation</h2>
+						<p>vs <i>spring-roo</i> or <i>yeoman</i></p>
+					</section>
+					<section>
+						<p>reduces boilerplate configuration</p>
+						<p>reuse best practices</p>
+						<p><a href="http://docs.spring.io/spring-boot/docs/current/reference/">documentation (epub, pdf, html)</a></p>
+					</section>
+					<section>
+						<h2>Library</h2>
+						<p>autoconfigure Spring components (mvc, jdbc, tx, etc)</p>
+					</section>
+					<section>
+						<h2>Begin with custom configuration</h2>
+						<p>modular but easily allows replacements gradually replacing auto-configuration</p>
+					</section>
+					<section>
+						<h2>Maven: parent POM</h2>
+						<p>dependencyManagement, exclusions, scopes</p>
+					</section>
+					<section>
+						<h2>Maven: plugin</h2>
+						<p>run a project with spring-boot:run</p>
+					</section>
+						<h2>Gradle + CLI</h2>
+						<p>* I never used them</p>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h1>Operations</h1>
+					</section>
+					<section>
+						<p>strong separation between <b>code</b> and <b>config</b></p>
+					</section>
+					<section>
+						<a href="http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html">customizable properties</a>
+					</section>
+					<section>
+						<p>* No servlet container, just an executable jar<p>
+					</section>
+					<section>
+						<pre><code class="hljs" data-trim>
+root@host# ln -s /var/myapp/myapp.jar /etc/init.d/myapp
+root@host# service myapp start
+						</code></pre>
+					</code>
+					</section>
+					<section>
+						<p>servlet container is embedded (tomcat, jetty, undertow)<p>
+					</section>
+					<section>
+						<p>can be built as .war as well<p>
+						<p>for servlet 3.x containers (Cantone)</p>
+						<p>for servlet 2.5 containers (EOC) using web.xml and <a href="https://github.com/scratches/spring-boot-legacy">spring-boot-legacy</a></p>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h1>Confort</h1>
+					</section>
+					<section>
+						<h2>Actuator</h2>
+						<p>* monitoring</p>
+						<p>healthchecks</p>
+						<p>flyway</p>
+						<p>metrics</p>
+					</section>
+					<section>
+						<h3>Externalize configuration</h3>
+						<ol style="font-size: 50%;">
+						<li>Devtools global settings properties on your home directory (~/.spring-boot-devtools.properties when devtools is active).</li>
+<li>@TestPropertySource annotations on your tests.</li>
+<li>@SpringBootTest#properties annotation attribute on your tests.</li>
+<li>Command line arguments.</li>
+<li>Properties from SPRING_APPLICATION_JSON (inline JSON embedded in an environment variable or system property)
+<li>ServletConfig init parameters.</li>
+<li>ServletContext init parameters.</li>
+<li>JNDI attributes from java:comp/env.</li>
+<li>Java System properties (System.getProperties()).</li>
+<li>OS environment variables.</li>
+<li>A RandomValuePropertySource that only has properties in random.*.</li>
+<li>Profile-specific application properties outside of your packaged jar (application-{profile}.properties and YAML variants)</li>
+<li>Profile-specific application properties packaged inside your jar (application-{profile}.properties and YAML variants)</li>
+<li>Application properties outside of your packaged jar (application.properties and YAML variants).</li>
+<li>Application properties packaged inside your jar (application.properties and YAML variants).</li>
+<li>@PropertySource annotations on your @Configuration classes.</li>
+<li>Default properties (specified using SpringApplication.setDefaultProperties).</li>
+</ol>
+					</section>
+					<section>
+						<pre><code>
+2016-10-14 10:17:59.134 ERROR 43374 --- [  restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   :
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of method exportingRepository in ch.eoc.cic.web.api.PersistenceDevelopmentConfig required a bean of type 'org.springframework.jdbc.core.JdbcOperations' that could not be found.
+	- Bean method 'jdbcTemplate' not loaded because @ConditionalOnSingleCandidate (types: javax.sql.DataSource; SearchStrategy: all) did not find any beans
+						</code></pre>
+					</section>
+					<section>
+						<h1>Enabling CORS</h1>
+						<pre><code># application.properties
+endpoints.cors.allowed-origins=http://example.com
+endpoints.cors.allowed-methods=GET,POST
+</code></pre>
+					</section>
+					<section>
+						<h2>HTTP compression</h2>
+						<pre><code># application.properties
+server.compression.enabled=true
+</pre></code>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Problems</h2>
+					</section>
+					<section>
+						<p>It's all magic (by design)</p>
+					</section>
+					<section>
+						<p><b>--debug</b> to the rescue:</p>
+						<ul>
+							<li>classpath</li>
+							<li>matching autoconfigurations</li>
+							<li>non-matching autoconfigurations</li>
+							<li>excluded autoconfigurations</li>
+						</ul>
+					</section>
+					<section>
+						<p>cannot use JSP with embedded tomcat</p>
+						<p>* with EOC we are using freemarker</p>
+					</section>
+					<section>
+						<p>autoconfiguration of security is too simple</p>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Standardization</h2>
+					</section>
+				</section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+// More info https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+	history: true,
+
+	// More info https://github.com/hakimel/reveal.js#dependencies
+	dependencies: [
+	{ src: 'plugin/markdown/marked.js' },
+	{ src: 'plugin/markdown/markdown.js' },
+	{ src: 'plugin/notes/notes.js', async: true },
+	{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+	]
+});
+		</script>
+	</body>
+</html>
