@@ -37,18 +37,18 @@
 						<p>non-functional requirements (e.g. monitoring, logging)</p>
 					</section>
 					<section>
-						<p>an opinionated framework on top of Spring</p>
-						<p>* no XML config, @Component, @Autowired</p>
+						<p>an opinionated framework on top of <b>Spring</b></p>
+						<p>no XML config, <code>@Component</code>, <code>@Autowired</code></p>
 					</section>
 					<section>
 						<p>reduces boilerplate configuration</p>
-						<p>ready to use integrations such as websocket, mail, JPA, flyway</p>
+						<p>ready to use integrations such as websocket, mail, JPA, elasticsearch</p>
 						<p>reuse best practices</p>
 						<p><a href="http://docs.spring.io/spring-boot/docs/current/reference/">documentation (epub, pdf, html)</a></p>
 					</section>
 					<section>
 						<h2>No code generation</h2>
-						<p>vs <i>spring-roo</i> or <i>yeoman</i></p>
+						<p>vs <b>spring-roo</b> or <b>Yeoman</b></p>
 					</section>
 					<section>
 						<h2>Gradle, CLI, Cloud</h2>
@@ -59,13 +59,34 @@
 						<p>dependencyManagement, exclusions, scopes</p>
 					</section>
 					<section>
+						<pre><code data-trim>
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>ch.exmachina</groupId>
+    <artifactId>myapp</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.4.1.RELEASE</version>
+    </parent>
+
+    <!-- Additional lines to be added here... -->
+
+</project>
+					</code></pre>
+					<section>
 						<h2>Maven: plugin</h2>
 						<p>run a project with <code>mvn spring-boot:run</code></p>
-						<p>hot deploy of resources and java classes (* with some restrictions)</p>
+						<p>hot deploy of resources and Java classes (* with some restrictions)</p>
 					</section>
 					<section>
 						<h2>Library</h2>
-						<p>autoconfigure Spring components (mvc, jdbc, tx, etc)</p>
+						<p>autoconfigure <b>Spring</b> components (mvc, jdbc, tx, etc)</p>
 					</section>
 					<section>
 						<pre><code data-trim>
@@ -95,7 +116,7 @@ public class SampleController {
 					</section>
 					<section>
 						<p>based on <code>@Conditional</code></p>
-						<p>(introduced in Spring 4.0)</p>
+						<p>* introduced in <b>Spring 4.0</b></p>
 					</section>
 					<section>
 						<pre><code data-trim>
@@ -123,13 +144,12 @@ public class OnWindows implements Condition {
 					<section>
 						<ul>
 							<li><code>@ConditionalOnClass</code></li>
+							<li><code>@ConditionalOnMissingClass</code></li>
+							<li><code>@ConditionalOngBean</code></li>
 							<li><code>@ConditionalOnMissingBean</code></li>
 							<li><code>@ConditionalOnProperty</code></li>
 							<li><code>@ConditionalOnExpression</code></li>
 						</ul>
-					</section>
-					<section>
-						<p>easily allows replacements gradually replacing auto-configuration</p>
 					</section>
 					<section>
 						<p>begin without custom configuration</p>
@@ -142,6 +162,9 @@ public class OnWindows implements Condition {
     <artifactId>spring-boot-starter-jdbc</artifactId>
 </dependency>
 						</pre></code>
+					</section>
+					<section>
+						<p>easily allows replacements gradually replacing auto-configuration</p>
 					</section>
 					<section>
 						<h2>Testing</h2>
@@ -214,7 +237,6 @@ public class ConnectionProperties {
 					</section>
 					<section>
 						<h3>Enabling CORS</h3>
-						<p>could be useful for frontenders</p>
 						<pre><code data-trim>
 endpoints.cors.allowed-origins=http://example.com
 endpoints.cors.allowed-methods=GET,POST
@@ -227,8 +249,8 @@ server.compression.enabled=true
 </pre></code>
 					</section>
 					<section>
-						<p>* No servlet container, just an executable jar<p>
-						<p>servlet container is embedded (tomcat, jetty, undertow)</p>
+						<p>No servlet container, just an executable jar<p>
+						<p>servlet container is embedded (<b>apache-tomcat</b>, <b>jetty</b>, <b>undertow</b>)</p>
 					</section>
 					<section>
 						<pre><code data-trim>
@@ -249,8 +271,29 @@ root@host# service myapp start
 						<p>metrics</p>
 					</section>
 					<section>
+						<h2>Logging</h2>
+						<p>logback by default</p>
+						<p>configurable via properties/YAML</p>
+						<p>file, rotation, etc</p>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Problems</h2>
+						<p>It's all magic (by design)</p>
+					</section>
+					<section>
+						<p><b>--debug</b> to the rescue:</p>
+						<ul>
+							<li>classpath</li>
+							<li><b>matching</b> autoconfigurations</li>
+							<li><b>non-matching</b> autoconfigurations</li>
+							<li><b>excluded</b> autoconfigurations</li>
+						</ul>
+					</section>
+					<section>
 						<pre><code data-trim>
-2016-10-14 10:17:59.134 ERROR 43374 --- [  restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   :
+2016-10-14 10:17:59.134 ERROR 43374 --- o.s.b.d.LoggingFailureAnalysisReporter   :
 
 ***************************
 APPLICATION FAILED TO START
@@ -265,44 +308,16 @@ required a bean of type 'org.springframework.jdbc.core.JdbcOperations' that coul
 						</code></pre>
 					</section>
 					<section>
-						<h2>Logging</h2>
-						<p>logback by default</p>
-						<p>configurable via properties/YAML</p>
-						<p>file, rotation, etc</p>
-					</section>
-				</section>
-				<section>
-					<section>
-						<h2>Problems</h2>
-					</section>
-					<section>
-						<p>It's all magic (by design)</p>
-					</section>
-					<section>
-						<p><b>--debug</b> to the rescue:</p>
-						<ul>
-							<li>classpath</li>
-							<li>matching autoconfigurations</li>
-							<li>non-matching autoconfigurations</li>
-							<li>excluded autoconfigurations</li>
-						</ul>
+						<p>autoconfiguration of security is too simple</p>
 					</section>
 					<section>
 						<p>cannot use JSP with embedded tomcat</p>
 						<p>* use freemarker</p>
 					</section>
-					<section>
-						<p>autoconfiguration of security is too simple</p>
-					</section>
 				</section>
 				<section>
 					<section>
-						<h2>Standardization</h2>
-					</section>
-					<section>
-						<p>more uniform projects</p>
-						<p>less effort in infrastructure</p>
-						<p>deploy documentation for free</p>
+						<h2>No silver bullets&#8482;</h2>
 					</section>
 					<section>
 						<ul>
@@ -312,7 +327,12 @@ required a bean of type 'org.springframework.jdbc.core.JdbcOperations' that coul
 						</ul>
 					</section>
 					<section>
-						<h2>No silver bullets&#8482;</h2>
+						<h2>Standardization</h2>
+					</section>
+					<section>
+						<p>more uniform projects</p>
+						<p>less effort in infrastructure</p>
+						<p>deploy documentation for free</p>
 					</section>
 					<section>
 						<h1>END;</h1>
@@ -331,10 +351,7 @@ Reveal.initialize({
 
 	// More info https://github.com/hakimel/reveal.js#dependencies
 	dependencies: [
-	{ src: 'plugin/markdown/marked.js' },
-	{ src: 'plugin/markdown/markdown.js' },
 	{ src: 'plugin/notes/notes.js', async: true },
-	{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
 	]
 });
 		</script>
