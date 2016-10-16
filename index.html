@@ -186,20 +186,6 @@ public class MyWebIntegrationTests {
 }
 </pre></code>
 					</section>
-					<section>
-						<h2>Type-safe, validated properties</h2>
-						<pre><code data-trim>
-@ConfigurationProperties(prefix="connection")
-public class ConnectionProperties {
-
-    @NotNull
-    private InetAddress remoteAddress;
-
-    // ... getters and setters
-
-}
-</code></pre>
-					</section>
 				</section>
 				<section>
 					<section>
@@ -207,6 +193,27 @@ public class ConnectionProperties {
 					</section>
 					<section>
 						<p>strong separation between <b>code</b> and <b>configuration</b></p>
+					</section>
+					<section>
+						<h3>properties</h3>
+						<pre><code data-trim>
+@Value("${foo.service.port}")
+int port;
+</code></pre>
+					</section>
+					<section>
+						<h3>stronly-typed properties</h3>
+						<pre><code data-trim>
+@ConfigurationProperties(prefix="connection")
+public class ConnectionProperties {
+
+    @javax.validation.constraints.NotNull
+    private InetAddress remoteAddress;
+
+    // ... getters and setters
+
+}
+</code></pre>
 					</section>
 					<section>
 						<h3>Externalize configuration</h3>
