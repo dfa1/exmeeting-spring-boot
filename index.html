@@ -61,24 +61,22 @@
 					<section>
 						<pre><code data-trim>
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>ch.exmachina</groupId>
     <artifactId>myapp</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>1.4.1.RELEASE</version>
     </parent>
-
     <!-- Additional lines to be added here... -->
-
 </project>
 					</code></pre>
+					</section>
 					<section>
 						<h2>Maven: plugin</h2>
 						<p>run a project with <code>mvn spring-boot:run</code></p>
@@ -351,7 +349,8 @@ Reveal.initialize({
 
 	// More info https://github.com/hakimel/reveal.js#dependencies
 	dependencies: [
-	{ src: 'plugin/notes/notes.js', async: true },
+	  {  src: 'plugin/notes/notes.js', async: true },
+      { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad();  }}
 	]
 });
 		</script>
