@@ -26,12 +26,15 @@
 			<div class="slides">
 				<section>
 					<h1>Spring Boot</h1>
-					<p>why it matterns for ExMachina</p>
+					<p>Why it matterns for ExMachina</p>
 				</section>
 				<section>
 					<section>
-						<h2>What it is?</h2>
-						<a href="https://spring.io/blog/2013/08/06/spring-boot-simplifying-spring-for-everyone">announced in 2013</a>
+						<a href="https://spring.io/blog/2013/08/06/spring-boot-simplifying-spring-for-everyone">announced in August 2013</a>
+					</section>
+					<section>
+						<h2>No code generation</h2>
+						<p>vs <i>spring-roo</i> or <i>yeoman</i></p>
 					</section>
 					<section>
 						<h3>library + build tools + documentation</h3>
@@ -39,20 +42,64 @@
 						<p>* no XML config, @Component, @Autowired</p>
 					</section>
 					<section>
-						<h2>No code generation</h2>
-						<p>vs <i>spring-roo</i> or <i>yeoman</i></p>
-					</section>
-					<section>
 						<p>reduces boilerplate configuration</p>
 						<p>reuse best practices</p>
 						<p><a href="http://docs.spring.io/spring-boot/docs/current/reference/">documentation (epub, pdf, html)</a></p>
 					</section>
 					<section>
-						<h2>Library</h2>
-						<p>autoconfigure Spring components (mvc, jdbc, tx, etc)</p>
+						<h2>Maven: parent POM</h2>
+						<p>dependencyManagement, exclusions, scopes</p>
 					</section>
 					<section>
-						<p>based on @Conditional (introduced in Spring 4.0)</p>
+						<h2>Maven: plugin</h2>
+						<p>run a project with spring-boot:run</p>
+					</section>
+					<section>
+						<h2>Gradle + CLI</h2>
+						<p>* I never used them</p>
+					</section>
+					<section>
+						<h2>Library</h2>
+						<p>autoconfigure Spring components (mvc, jdbc, tx, etc)</p>
+						<p>one line import in pom.xml</p>
+					</section>
+					<section>
+						<pre><code>package hello;
+
+import org.springframework.boot.*;
+import org.springframework.boot.autoconfigure.*;
+import org.springframework.stereotype.*;
+import org.springframework.web.bind.annotation.*;
+
+@Controller
+@EnableAutoConfiguration
+public class SampleController {
+
+    @RequestMapping("/")
+    @ResponseBody
+    String home() {
+        return "Hello World!";
+    }
+
+    public static void main(String[] args) throws Exception {
+        SpringApplication.run(SampleController.class, args);
+    }
+}
+</code></pre>
+					</section>
+					<section>
+						<p>based on <code>@Conditional</code></p>
+						<p>(introduced in Spring 4.0)</p>
+					</section>
+					<section>
+						<pre><code>
+@Bean
+@Conditional(OnWindows.class)
+public LockingService lockingService() {
+   return new WindowsLockingService();
+}
+
+</code></pre>
 					</section>
 					<section>
 						<pre><code>
@@ -70,16 +117,6 @@ public class OnWindows implements Condition {
 						</code></pre>
 					</section>
 					<section>
-						<pre><code>
-@Bean
-@Conditional(OnWindows.class)
-public LockingService lockingService() {
-   return new WindowsLockingService();
-}
-
-</code></pre>
-					</section>
-					<section>
 						<ul>
 							<li><code>@ConditionalOnClass</code></li>
 							<li><code>@ConditionalOnMissingBean</code></li>
@@ -95,7 +132,7 @@ public LockingService lockingService() {
 						<p>* time saver</p>
 					</section>
 					<section>
-						<h2>Type-safe configuration</h2>
+						<h2>Type-safe, validated properties</h2>
 						<pre><code>
 @ConfigurationProperties(prefix="connection")
 public class ConnectionProperties {
@@ -107,12 +144,6 @@ public class ConnectionProperties {
 
 }
 </code></pre>
-					</section>
-					<section>
-						<h2>Logging<h2>
-						<p>logback, by default</p>
-						<p>configurable via application.properties</p>
-						<p>file, rotation, etc</p>
 					</section>
 					<section>
 						<h2>Testing</h2>
@@ -135,18 +166,6 @@ public class MyWebIntegrationTests {
 
 }
 </pre></code>
-					</section>
-					<section>
-						<h2>Maven: parent POM</h2>
-						<p>dependencyManagement, exclusions, scopes</p>
-					</section>
-					<section>
-						<h2>Maven: plugin</h2>
-						<p>run a project with spring-boot:run</p>
-					</section>
-					<section>
-						<h2>Gradle + CLI</h2>
-						<p>* I never used them</p>
 					</section>
 				</section>
 				<section>
@@ -232,6 +251,12 @@ endpoints.cors.allowed-methods=GET,POST
 						<pre><code># application.properties
 server.compression.enabled=true
 </pre></code>
+					</section>
+					<section>
+						<h2>Logging</h2>
+						<p>logback by default</p>
+						<p>configurable via application.properties</p>
+						<p>file, rotation, etc</p>
 					</section>
 				</section>
 				<section>
