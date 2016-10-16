@@ -66,7 +66,14 @@
 					<section>
 						<h2>Library</h2>
 						<p>autoconfigure Spring components (mvc, jdbc, tx, etc)</p>
-						<p>one line import in pom.xml</p>
+					</section>
+					<section>
+						<pre><code data-trim>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+						</pre></code>
 					</section>
 					<section>
 						<pre><code data-trim>
@@ -126,7 +133,15 @@ public class OnWindows implements Condition {
 					</section>
 					<section>
 						<p>begin without custom configuration</p>
-						<p>e.g. JDBC datasource with pooling, transaction management</p>
+					</section>
+					<section>
+						<p>e.g. JDBC datasource with pooling, transaction management, flyway</p>
+						<pre><code data-trim>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-jdbc</artifactId>
+</dependency>
+						</pre></code>
 					</section>
 					<section>
 						<h2>Type-safe, validated properties</h2>
