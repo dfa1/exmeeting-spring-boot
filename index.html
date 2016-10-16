@@ -185,7 +185,7 @@ public class MyWebIntegrationTests {
 						<h1>Operations</h1>
 					</section>
 					<section>
-						<p>strong separation between <b>code</b> and <b>config</b></p>
+						<p>strong separation between <b>code</b> and <b>configuration</b></p>
 					</section>
 					<section>
 						<h3>Externalize configuration</h3>
@@ -215,14 +215,14 @@ public class MyWebIntegrationTests {
 					<section>
 						<h3>Enabling CORS</h3>
 						<p>could be useful for frontenders</p>
-						<pre><code># application.properties
+						<pre><code data-trim>
 endpoints.cors.allowed-origins=http://example.com
 endpoints.cors.allowed-methods=GET,POST
 </code></pre>
 					</section>
 					<section>
 						<h3>HTTP compression</h3>
-						<pre><code># application.properties
+						<pre><code data-trim>
 server.compression.enabled=true
 </pre></code>
 					</section>
@@ -231,8 +231,8 @@ server.compression.enabled=true
 						<p>servlet container is embedded (tomcat, jetty, undertow)</p>
 					</section>
 					<section>
-						<pre><code class="hljs" data-trim>
-root@host# ln -s /var/myapp/myapp.jar /etc/init.d/myapp
+						<pre><code data-trim>
+root@host# ln -s /opt/myapp/myapp.jar /etc/init.d/myapp
 root@host# service myapp start
 						</code></pre>
 					</code>
@@ -258,14 +258,16 @@ APPLICATION FAILED TO START
 
 Description:
 
-Parameter 0 of method exportingRepository in ch.eoc.cic.web.api.PersistenceDevelopmentConfig required a bean of type 'org.springframework.jdbc.core.JdbcOperations' that could not be found.
-	- Bean method 'jdbcTemplate' not loaded because @ConditionalOnSingleCandidate (types: javax.sql.DataSource; SearchStrategy: all) did not find any beans
+Parameter 0 of method exportingRepository in ch.eoc.cic.web.api.PersistenceDevelopmentConfig
+required a bean of type 'org.springframework.jdbc.core.JdbcOperations' that could not be found.
+	- Bean method 'jdbcTemplate' not loaded because @ConditionalOnSingleCandidate
+      (types: javax.sql.DataSource; SearchStrategy: all) did not find any beans
 						</code></pre>
 					</section>
 					<section>
 						<h2>Logging</h2>
 						<p>logback by default</p>
-						<p>configurable via application.properties</p>
+						<p>configurable via properties/YAML</p>
 						<p>file, rotation, etc</p>
 					</section>
 				</section>
@@ -287,7 +289,7 @@ Parameter 0 of method exportingRepository in ch.eoc.cic.web.api.PersistenceDevel
 					</section>
 					<section>
 						<p>cannot use JSP with embedded tomcat</p>
-						<p>* with EOC we are using freemarker</p>
+						<p>* use freemarker</p>
 					</section>
 					<section>
 						<p>autoconfiguration of security is too simple</p>
@@ -298,13 +300,15 @@ Parameter 0 of method exportingRepository in ch.eoc.cic.web.api.PersistenceDevel
 						<h2>Standardization</h2>
 					</section>
 					<section>
-						<p>more uniform builds and deployments</p>
+						<p>more uniform projects</p>
+						<p>less effort in infrastructure</p>
+						<p>deploy documentation for free</p>
 					</section>
 					<section>
 						<ul>
-						<li>file-archiver standalone app with camel, maven-appassembler, custom configurations</li>
-						<li>ger-services webapp, jetty locally, tomcat 6.x on prod</li>
-						<li>generisk webapp, jetty locally, tomcat 6.x on prod</li>
+							<li><b>file-archiver</b> standalone app with camel, maven-appassembler, custom configurations</li>
+							<li><b>ger-services</b> webapp, jetty locally, tomcat 6.x on prod</li>
+							<li><b>generisk</b> webapp, jetty locally, tomcat 6.x on prod</li>
 						</ul>
 					</section>
 					<section>
