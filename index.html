@@ -26,25 +26,30 @@
 			<div class="slides">
 				<section>
 					<h1>Spring Boot</h1>
-					<p>Why it matterns for ExMachina</p>
 				</section>
 				<section>
 					<section>
 						<a href="https://spring.io/blog/2013/08/06/spring-boot-simplifying-spring-for-everyone">announced in August 2013</a>
+						<p>fast getting started experience</p>
+						<p>non-functional infrastructure (e.g. configuration, monitoring, etc)</p>
+					</section>
+					<section>
+						<p>an opinionated framework on top of Spring</p>
+						<p>* no XML config, @Component, @Autowired</p>
+					</section>
+					<section>
+						<p>reduces boilerplate configuration of common spring modules</p>
+						<p>ready to use integrations such as websocket, mail, JPA, elasticsearch, flyway</p>
+						<p>reuse best practices</p>
+						<p><a href="http://docs.spring.io/spring-boot/docs/current/reference/">documentation (epub, pdf, html)</a></p>
 					</section>
 					<section>
 						<h2>No code generation</h2>
 						<p>vs <i>spring-roo</i> or <i>yeoman</i></p>
 					</section>
 					<section>
-						<h3>library + build tools + documentation</h3>
-						<p>an opinionated framework on top of Spring</p>
-						<p>* no XML config, @Component, @Autowired</p>
-					</section>
-					<section>
-						<p>reduces boilerplate configuration</p>
-						<p>reuse best practices</p>
-						<p><a href="http://docs.spring.io/spring-boot/docs/current/reference/">documentation (epub, pdf, html)</a></p>
+						<h2>Gradle + CLI</h2>
+						<p>* I never used them</p>
 					</section>
 					<section>
 						<h2>Maven: parent POM</h2>
@@ -53,10 +58,7 @@
 					<section>
 						<h2>Maven: plugin</h2>
 						<p>run a project with spring-boot:run</p>
-					</section>
-					<section>
-						<h2>Gradle + CLI</h2>
-						<p>* I never used them</p>
+						<p>hot deploy of resources and java classes (* with some restrictions)</p>
 					</section>
 					<section>
 						<h2>Library</h2>
@@ -64,13 +66,7 @@
 						<p>one line import in pom.xml</p>
 					</section>
 					<section>
-						<pre><code>package hello;
-
-import org.springframework.boot.*;
-import org.springframework.boot.autoconfigure.*;
-import org.springframework.stereotype.*;
-import org.springframework.web.bind.annotation.*;
-
+						<pre><code data-trim>
 @Controller
 @EnableAutoConfiguration
 public class SampleController {
@@ -92,26 +88,24 @@ public class SampleController {
 						<p>(introduced in Spring 4.0)</p>
 					</section>
 					<section>
-						<pre><code>
+						<pre><code data-trim>
 @Bean
 @Conditional(OnWindows.class)
 public LockingService lockingService() {
-   return new WindowsLockingService();
+    return new WindowsLockingService();
 }
-
 </code></pre>
 					</section>
 					<section>
-						<pre><code>
-import org.springframework.context.annotation.ConditionContext;
-import org.springframework.core.type.AnnotatedTypeMetadata;
-
+						<pre><code data-trim>
 public class OnWindows implements Condition {
 
-  @Override
-  public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
-    return context.getEnvironment().getProperty("os.name").contains("Windows");
-  }
+    @Override
+    public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
+      Environment env = context.getEnvironment();
+      return env.getProperty("os.name").contains("Windows");
+    }
+
 }
 
 						</code></pre>
@@ -129,11 +123,11 @@ public class OnWindows implements Condition {
 					</section>
 					<section>
 						<p>begin without custom configuration</p>
-						<p>* time saver</p>
+						<p>e.g. JDBC datasource with pooling, transaction management</p>
 					</section>
 					<section>
 						<h2>Type-safe, validated properties</h2>
-						<pre><code>
+						<pre><code data-trim>
 @ConfigurationProperties(prefix="connection")
 public class ConnectionProperties {
 
@@ -150,7 +144,7 @@ public class ConnectionProperties {
 						<p>configures junit, spring-test, JSONAssert, hamcrest, ...</p>
 					</section>
 					<section>
-						<pre><code>
+						<pre><code data-trim>
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
 public class MyWebIntegrationTests {
@@ -176,34 +170,6 @@ public class MyWebIntegrationTests {
 						<p>strong separation between <b>code</b> and <b>config</b></p>
 					</section>
 					<section>
-						<a href="http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html">customizable properties</a>
-					</section>
-					<section>
-						<p>* No servlet container, just an executable jar<p>
-					</section>
-					<section>
-						<pre><code class="hljs" data-trim>
-root@host# ln -s /var/myapp/myapp.jar /etc/init.d/myapp
-root@host# service myapp start
-						</code></pre>
-					</code>
-					</section>
-					<section>
-						<p>servlet container is embedded (tomcat, jetty, undertow)</p>
-					</section>
-					<section>
-						<p>can be built as .war as well</p>
-						<p>for servlet 3.x containers (Cantone)</p>
-						<p>for servlet 2.5 containers (EOC) using web.xml and <a href="https://github.com/scratches/spring-boot-legacy">spring-boot-legacy</a></p>
-					</section>
-					<section>
-						<h2>Actuator</h2>
-						<p>* monitoring</p>
-						<p>healthchecks</p>
-						<p>flyway</p>
-						<p>metrics</p>
-					</section>
-					<section>
 						<h3>Externalize configuration</h3>
 						<ol style="font-size: 50%;">
 						<li>Devtools global settings properties on your home directory (~/.spring-boot-devtools.properties when devtools is active).</li>
@@ -226,7 +192,47 @@ root@host# service myapp start
 </ol>
 					</section>
 					<section>
-						<pre><code>
+						<a href="http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html">customizable properties</a>
+					</section>
+					<section>
+						<h3>Enabling CORS</h3>
+						<p>could be useful for frontenders</p>
+						<pre><code># application.properties
+endpoints.cors.allowed-origins=http://example.com
+endpoints.cors.allowed-methods=GET,POST
+</code></pre>
+					</section>
+					<section>
+						<h3>HTTP compression</h3>
+						<pre><code># application.properties
+server.compression.enabled=true
+</pre></code>
+					</section>
+					<section>
+						<p>* No servlet container, just an executable jar<p>
+						<p>servlet container is embedded (tomcat, jetty, undertow)</p>
+					</section>
+					<section>
+						<pre><code class="hljs" data-trim>
+root@host# ln -s /var/myapp/myapp.jar /etc/init.d/myapp
+root@host# service myapp start
+						</code></pre>
+					</code>
+					</section>
+					<section>
+						<p>can be built as .war as well</p>
+						<p>for servlet 3.x containers (Cantone)</p>
+						<p>for servlet 2.5 containers (EOC) using web.xml and <a href="https://github.com/scratches/spring-boot-legacy">spring-boot-legacy</a></p>
+					</section>
+					<section>
+						<h2>Actuator</h2>
+						<p>* monitoring</p>
+						<p>healthchecks</p>
+						<p>flyway</p>
+						<p>metrics</p>
+					</section>
+					<section>
+						<pre><code data-trim>
 2016-10-14 10:17:59.134 ERROR 43374 --- [  restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   :
 
 ***************************
@@ -238,19 +244,6 @@ Description:
 Parameter 0 of method exportingRepository in ch.eoc.cic.web.api.PersistenceDevelopmentConfig required a bean of type 'org.springframework.jdbc.core.JdbcOperations' that could not be found.
 	- Bean method 'jdbcTemplate' not loaded because @ConditionalOnSingleCandidate (types: javax.sql.DataSource; SearchStrategy: all) did not find any beans
 						</code></pre>
-					</section>
-					<section>
-						<h1>Enabling CORS</h1>
-						<pre><code># application.properties
-endpoints.cors.allowed-origins=http://example.com
-endpoints.cors.allowed-methods=GET,POST
-</code></pre>
-					</section>
-					<section>
-						<h2>HTTP compression</h2>
-						<pre><code># application.properties
-server.compression.enabled=true
-</pre></code>
 					</section>
 					<section>
 						<h2>Logging</h2>
@@ -286,11 +279,9 @@ server.compression.enabled=true
 				<section>
 					<section>
 						<h2>No silver bullets&#8482;</h2>
-						<aside class="notes">
-							Context
-							Scope
-							Budget
-							Team
+					</section>
+					<section>
+						<h2>Standardization</h2>
 					</section>
 					<section>
 						<ul>
@@ -300,10 +291,10 @@ server.compression.enabled=true
 						</ul>
 					</section>
 					<section>
-						<p>more uniform builds, configuration and deployments</p>
+						<p>more uniform builds and deployments</p>
 					</section>
 					<section>
-						<h2>Standardization</h2>
+						<h1>END;</h1>
 					</section>
 				</section>
 			</div>
