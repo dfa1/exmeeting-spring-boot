@@ -33,16 +33,16 @@
 				<section>
 					<section>
 						<a href="https://spring.io/blog/2013/08/06/spring-boot-simplifying-spring-for-everyone">announced in August 2013</a>
-						<p>fast getting started experience</p>
-						<p>non-functional infrastructure (e.g. configuration, monitoring, etc)</p>
+						<p>simpler getting started experience</p>
+						<p>non-functional requirements (e.g. monitoring, logging)</p>
 					</section>
 					<section>
 						<p>an opinionated framework on top of Spring</p>
 						<p>* no XML config, @Component, @Autowired</p>
 					</section>
 					<section>
-						<p>reduces boilerplate configuration of common spring modules</p>
-						<p>ready to use integrations such as websocket, mail, JPA, elasticsearch, flyway</p>
+						<p>reduces boilerplate configuration</p>
+						<p>ready to use integrations such as websocket, mail, JPA, flyway</p>
 						<p>reuse best practices</p>
 						<p><a href="http://docs.spring.io/spring-boot/docs/current/reference/">documentation (epub, pdf, html)</a></p>
 					</section>
@@ -60,7 +60,7 @@
 					</section>
 					<section>
 						<h2>Maven: plugin</h2>
-						<p>run a project with spring-boot:run</p>
+						<p>run a project with <code>mvn spring-boot:run</code></p>
 						<p>hot deploy of resources and java classes (* with some restrictions)</p>
 					</section>
 					<section>
@@ -129,7 +129,7 @@ public class OnWindows implements Condition {
 						</ul>
 					</section>
 					<section>
-						<p>modular but easily allows replacements gradually replacing auto-configuration</p>
+						<p>easily allows replacements gradually replacing auto-configuration</p>
 					</section>
 					<section>
 						<p>begin without custom configuration</p>
@@ -142,20 +142,6 @@ public class OnWindows implements Condition {
     <artifactId>spring-boot-starter-jdbc</artifactId>
 </dependency>
 						</pre></code>
-					</section>
-					<section>
-						<h2>Type-safe, validated properties</h2>
-						<pre><code data-trim>
-@ConfigurationProperties(prefix="connection")
-public class ConnectionProperties {
-
-    @NotNull
-    private InetAddress remoteAddress;
-
-    // ... getters and setters
-
-}
-</code></pre>
 					</section>
 					<section>
 						<h2>Testing</h2>
@@ -172,12 +158,26 @@ public class MyWebIntegrationTests {
 
     @Test
     public void exampleTest() {
-        String body = this.restTemplate.getForObject("/", String.class);
+        String body = restTemplate.getForObject("/", String.class);
         assertThat(body).isEqualTo("Hello World");
     }
 
 }
 </pre></code>
+					</section>
+					<section>
+						<h2>Type-safe, validated properties</h2>
+						<pre><code data-trim>
+@ConfigurationProperties(prefix="connection")
+public class ConnectionProperties {
+
+    @NotNull
+    private InetAddress remoteAddress;
+
+    // ... getters and setters
+
+}
+</code></pre>
 					</section>
 				</section>
 				<section>
